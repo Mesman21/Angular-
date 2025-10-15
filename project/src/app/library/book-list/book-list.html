@@ -1,0 +1,66 @@
+<div class="page-layout">
+    
+    <div class="sidebar">
+        <h3>Категорії</h3> 
+        
+        <ul>
+            <li *ngFor="let category of categories">
+                <a 
+                    href="#" 
+                    (click)="filterBooks(category); $event.preventDefault()" 
+                    [class.active]="isCategorySelected(category)"
+                >
+                    {{ category }}
+                </a>
+            </li>
+            
+            <li>
+                <a 
+                    href="#" 
+                    (click)="filterBooks(null); $event.preventDefault()"
+                    [class.active]="isCategorySelected(null)"
+                >
+                    Усі книги
+                </a>
+            </li>
+        </ul>
+        
+        <hr> 
+        
+        <p>Тут буде функціонал фільтрації</p>
+    </div>
+    
+    <div class="main-content">
+        
+        <h1 class="centered-heading">Ваша Онлайн-Бібліотека</h1>
+        
+        <div class="book-grid">
+            
+            <div *ngFor="let book of filteredBooks" class="book-card">
+                
+                <div class="book-cover-container">
+                    <img 
+                        *ngIf="book.imageUrl" 
+                        [src]="book.imageUrl" 
+                        [alt]="'Обкладинка книги ' + book.title"
+                        class="book-cover"
+                    >
+                    <div *ngIf="!book.imageUrl" class="no-photo">
+                        <p>Без фото</p>
+                    </div>
+                </div>
+                
+                <div class="book-content-wrapper">
+                    <h3>{{ book.title }}</h3>
+                    <p class="author">Автор: {{ book.author }}</p>
+                    <p class="excerpt">{{ book.excerpt }}</p>
+                </div>
+                
+                <a [routerLink]="['/read', book.id]" class="read-button">Читати →</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+</div>

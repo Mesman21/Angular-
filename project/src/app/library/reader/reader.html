@@ -1,0 +1,48 @@
+<div class="reader-page-container">
+    
+    <a routerLink="/library" class="back-button">
+        ← Повернутися до бібліотеки
+    </a>
+
+    <div *ngIf="currentBook" class="reader-content">
+        
+        <h1 class="book-title">{{ currentBook.title }}</h1>
+        <p class="book-author">Автор: {{ currentBook.author }}</p>
+        
+        <hr>
+
+        <div class="book-text">
+            <p>{{ pageContent }}</p>
+        </div>
+        
+        <div class="pagination-controls">
+            <button 
+                (click)="goToPrevPage()" 
+                [disabled]="isFirstPage()"
+                [class.disabled]="isFirstPage()"
+                class="nav-button prev"
+            >
+                ← Попередня
+            </button>
+            
+            <span class="page-indicator">
+                Сторінка {{ currentPageIndex + 1 }} з {{ pages.length }}
+            </span>
+            
+            <button 
+                (click)="goToNextPage()" 
+                [disabled]="isLastPage()"
+                [class.disabled]="isLastPage()"
+                class="nav-button next"
+            >
+                Наступна →
+            </button>
+        </div>
+
+    </div>
+
+    <div *ngIf="!currentBook">
+        <h2>Помилка</h2>
+        <p>На жаль, книга з ID {{ bookId }} не знайдена. Перевірте посилання.</p>
+    </div>
+</div>
