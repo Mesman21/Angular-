@@ -13,7 +13,7 @@ import { Book, BookService } from '../../services/book';
   imports: [CommonModule, RouterLink]
 })
 export class BookListComponent implements OnInit {
-  categories: string[] = ['TypeScript', 'Angular', 'CSS HTML']; 
+  categories: string[] = ['TypeScript', 'Angular', 'CSS/HTML','Роман']; 
   
   allBooks: Book[] = [];
   filteredBooks: Book[] = [];
