@@ -1,25 +1,25 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router'; 
-import { CommonModule, isPlatformBrowser } from '@angular/common'; 
-import { Book, BookService } from '../../services/book'; 
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Book, BookService } from '../../services/book';
 
 @Component({
   selector: 'app-reader',
-  templateUrl: './reader.html', 
+  templateUrl: './reader.html',
   styleUrls: ['./reader.css'],
-  standalone: true, 
-  imports: [CommonModule, RouterLink] 
+  standalone: true,
+  imports: [CommonModule, RouterLink]
 })
 export class ReaderComponent implements OnInit {
-  
+
   bookId: number | undefined;
   currentBook: Book | undefined;
-  
-  pages: string[] = []; 
-  currentPageIndex: number = 0; 
-  pageContent: string = ''; 
-  
-  private readonly PAGE_SIZE = 1500; 
+
+  pages: string[] = [];
+  currentPageIndex: number = 0;
+  pageContent: string = '';
+
+  private readonly PAGE_SIZE = 1500;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,11 +29,11 @@ export class ReaderComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
-      
+
       if (idParam) {
-        this.bookId = +idParam; 
+        this.bookId = +idParam;
         this.currentBook = this.bookService.getBookById(this.bookId);
-        
+
         if (this.currentBook) {
           this.paginateText(this.currentBook.fullText);
           this.updatePageContent();
@@ -73,11 +73,11 @@ export class ReaderComponent implements OnInit {
       this.updatePageContent();
     }
   }
-  
+
   isFirstPage(): boolean {
     return this.currentPageIndex === 0;
   }
-  
+
   isLastPage(): boolean {
     return this.currentPageIndex === this.pages.length - 1;
   }

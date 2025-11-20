@@ -3,28 +3,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Book, BookService } from '../../services/book'; 
+import { Book, BookService } from '../../services/book';
 
 @Component({
   selector: 'app-book-list',
-  templateUrl: './book-list.html', 
+  templateUrl: './book-list.html',
   styleUrls: ['./book-list.css'],
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule, RouterLink]
 })
 export class BookListComponent implements OnInit {
-  categories: string[] = ['TypeScript', 'Angular', 'CSS HTML']; 
-  
+
+  categories: string[] = ['TypeScript', 'Angular', 'CSS/HTML'];
   allBooks: Book[] = [];
   filteredBooks: Book[] = [];
 
   selectedCategory: string | null = null;
-  
+
   constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
     this.allBooks = this.bookService.getAllBooks();
-    this.filterBooks(null); 
+    this.filterBooks(null);
   }
 
   filterBooks(category: string | null): void {
