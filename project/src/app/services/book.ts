@@ -1,73 +1,93 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'; 
+import { Observable, map, of } from 'rxjs'; 
 
 export interface Book {
-  id: number;
-  title: string;
-  author: string;
-  excerpt: string;
-  fullText: string;
-  imageUrl?: string;
-  category: string;
+    id: number;
+    title: string;
+    author: string;
+    excerpt: string;
+    // URL до файлу .txt
+    fullTextSource: string; 
+    fullText?: string; 
+    imageUrl?: string;
+    category: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BookService {
-  public readonly categories: string[] = [
-    'Усі Книги',
-    'TypeScript',
-    'Angular',
-    'CSS/HTML'
-  ];
+    
+    public readonly categories: string[] = [
+        'Усі Книги',
+        'TypeScript',
+        'Angular',
+        'CSS/HTML'
+    ];
 
-  private books: Book[] = [
-    {
-      id: 1,
-      title: "Programming TypeScript",
-      author: "Boris Cherny",
-      excerpt: "Масштабування JavaScript-додатків. Все про типи, компілятор та екосистему.",
-      fullText: "TypeScript — це потужний інструмент, який дозволяє писати масштабовані JavaScript-додатки. У цій книзі Борис Черний проводить читача через усі аспекти мови: від базових типів до просунутих технік роботи з компілятором. Ви дізнаєтесь: Як працює система типів TypeScript і як використовувати її на повну.- Як використовувати класи, інтерфейси та дженерики для створення надійного коду. Як інтегрувати TypeScript у існуючі JS-проекти.Як обробляти помилки та писати асинхронний код безпечно.Ця книга розрахована на розробників середнього та високого рівня, які хочуть глибше зрозуміти, як працює типізація у вебі.",
-      imageUrl: "/TypeScript.jpg",
-      category: 'TypeScript'
-    },
-    {
-      id: 2,
-      title: "Angular: Up and Running",
-      author: "Shyam Seshadri",
-      excerpt: "Покроковий гід по створенню Angular-додатків. Від Hello World до деплою.",
-      fullText: "Ця книга проведе вас через всі етапи створення продуктивного Angular-додатку. Основні теми:- Angular CLI: як швидко генерувати код і керувати проектом.- Компоненти: життєвий цикл, шаблони та взаємодія.- Форми: різниця між Template-driven та Reactive підходами.- HTTP Client: спілкування з сервером та обробка даних через RxJS.- Маршрутизація: налаштування навігації та захист доступу (Guards).Книга ідеальна для тих, хто вже знає HTML/JS і хоче освоїти сучасний фреймворк від Google на професійному рівні.",
-      imageUrl: "/angular.png",
-      category: 'Angular'
-    },
-    {
-      id: 3,
-      title: "CSS Secrets",
-      author: "Lea Verou",
-      excerpt: "47 готових рішень для складних проблем веб-дизайну. Магія CSS у дії.",
-      fullText: "Ліа Веру, член групи W3C CSS Working Group, ділиться секретами створення неймовірного дизайну. Замість нудної теорії — це збірник рецептів для реальних завдань.Ви дізнаєтесь як:- Створювати складні візерунки та фони без картинок.- Робити фігури, тіні та ефекти матового скла. Створювати плавні анімації та переходи. Писати код, який легко підтримувати (DRY).Ця книга навчить вас думати як CSS-експерт і вирішувати задачі елегантно.",
-      imageUrl: "css.jfif",
-      category: 'CSS/HTML'
+    private books: Book[] = [
+        {
+            id: 1,
+            title: "Programming TypeScript",
+            author: "Boris Cherny",
+            excerpt: "Масштабування JavaScript-додатків. Все про типи, компілятор та екосистему.",
+            // ✅ ШЛЯХ ДО PUBLIC FOLDER (Абсолютний шлях)
+            fullTextSource: '/assets/programming_typescript.txt', 
+            imageUrl: "/TypeScript.jpg",
+            category: 'TypeScript'
+        },
+        {
+            id: 2,
+            title: "Angular: Up and Running",
+            author: "Shyam Seshadri",
+            excerpt: "Покроковий гід по створенню Angular-додатків. Від Hello World до деплою.",
+            fullTextSource: '/assets/angular_up_and_running.txt',
+            imageUrl: "/angular.png",
+            category: 'Angular'
+        },
+        {
+            id: 3,
+            title: "CSS Secrets",
+            author: "Lea Verou",
+            excerpt: "47 готових рішень для складних проблем веб-дизайну. Магія CSS у дії.",
+            fullTextSource: '/assets/css_secrets.txt',
+            imageUrl: "/css.jfif",
+            category: 'CSS/HTML'
 
-    },
-    {
-      id: 4,
-      title: "HTML and CSS: Design and Build Websites",
-      author: "Jon Duckett",
-      excerpt: "Візуальний гід по створенню веб-сайтів. Бестселер, який змінив підхід до навчання.",
-      fullText: "Ця книга відрізняється від усіх інших IT-підручників. Замість суцільного тексту тут — інфографіка, кольорові схеми та візуальні пояснення кожної концепції.Ви пройдете шлях від чистого аркуша до готового сайту:- Структура HTML5: семантика, розмітка тексту, списки та таблиці.- Стилізація CSS: кольори, шрифти, бокси та позиціонування.- Макетування: як розміщувати елементи на сторінці правильно.Книга ідеально підходить як для новачків, так і для дизайнерів, які хочуть розуміти код. Це справжній витвір мистецтва у світі технічної літератури.",
-      imageUrl: "jond.jfif",
-      category: 'CSS/HTML'
+        },
+        {
+            id: 4,
+            title: "HTML and CSS: Design and Build Websites",
+            author: "Jon Duckett",
+            excerpt: "Візуальний гід по створенню веб-сайтів. Бестселер, який змінив підхід до навчання.",
+            fullTextSource: '/assets/html_and_css_design.txt',
+            imageUrl: "/jond.jfif",
+            category: 'CSS/HTML'
+        }
+    ];
+
+    constructor(private http: HttpClient) { } 
+
+    getAllBooks(): Book[] {
+        return this.books;
     }
-  ];
 
-  constructor() { }
+    getBookById(id: number): Book | undefined {
+        return this.books.find(book => book.id === id);
+    }
 
-  getAllBooks(): Book[] {
-    return this.books;
-  }
-
-  getBookById(id: number): Book | undefined {
-    return this.books.find(book => book.id === id);
-  }
+    getBookFullText(bookId: number): Observable<string> {
+        const book = this.books.find(b => b.id === bookId);
+        if (!book) { return new Observable(observer => observer.error('Книгу не знайдено')); }
+        if (book.fullText) { return of(book.fullText); }
+        
+        // 2. HTTP-запит до файлу .txt
+        return this.http.get(book.fullTextSource, { responseType: 'text' }).pipe(
+            map(text => {
+                book.fullText = text; 
+                return text;
+            })
+        );
+    }
 }
