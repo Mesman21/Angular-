@@ -1,10 +1,8 @@
 <div class="reader-container">
-    <!-- Посилання Назад -->
     <a [routerLink]="['/library']" class="back-link">
         &larr; Повернутися до бібліотеки
     </a>
 
-    <!-- Заголовок Книги -->
     <div class="book-info-header" *ngIf="currentBook">
         <h1 class="title">{{ currentBook.title }}</h1>
         <p class="author">
@@ -15,138 +13,31 @@
 
     <hr class="divider">
 
-    <!-- ТЕКСТ КНИГИ -->
     <div class="book-content">
-        <!-- 💡 ОСНОВНА ПЕРЕВІРКА: 
-             Використовуємо <pre> для збереження переносів рядка та 
-             клас для примусового відображення. -->
         <pre class="page-text-visible">{{ pageContent }}</pre>
     </div>
 
-    <!-- Пагінація та Керування -->
     <div class="pagination-controls">
         
-        <!-- Кнопка Попередня -->
         <button 
             [disabled]="isFirstPage()" 
             (click)="goToPrevPage()"
-            class="pagination-button prev-button">
+            class="pagination-button prev-button"
+        >
             &larr; Попередня
         </button>
 
-        <!-- Індикатор Сторінки -->
         <span class="page-indicator">
             Сторінка {{ currentPageIndex + 1 }} з {{ totalPages }}
         </span>
 
-        <!-- Кнопка Наступна -->
         <button 
             [disabled]="isLastPage()" 
             (click)="goToNextPage()"
-            class="pagination-button next-button">
+            class="pagination-button next-button"
+        >
             Наступна &rarr;
         </button>
 
     </div>
 </div>
-
-<style>
-/* Стилі для ReaderComponent */
-.reader-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Inter', sans-serif;
-}
-
-.back-link {
-    color: #3b82f6;
-    text-decoration: none;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    transition: color 0.2s;
-}
-
-.back-link:hover {
-    color: #1e40af;
-}
-
-.title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #1f2937;
-}
-
-.author {
-    font-style: italic;
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-}
-
-.divider {
-    border: none;
-    height: 1px;
-    background-color: #e5e7eb;
-    margin: 2rem 0;
-}
-
-.book-content {
-    min-height: 400px; /* Для візуального простору */
-    padding: 1rem 0;
-    line-height: 1.6;
-    font-size: 1rem;
-}
-
-.page-text-visible {
-    /* ГАРАНТІЯ, ЩО ТЕКСТ ВИДИМИЙ: */
-    white-space: pre-wrap; 
-    color: #111111 !important; /* Примусово темно-сірий, щоб уникнути білого кольору */
-    background-color: transparent !important;
-    min-height: 200px; /* Забезпечуємо висоту */
-    font-family: inherit; 
-    margin: 0;
-}
-
-.pagination-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 2rem;
-    border-top: 1px solid #e5e7eb;
-    margin-top: 2rem;
-}
-
-.pagination-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, opacity 0.2s;
-    border: none;
-}
-
-.pagination-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.prev-button {
-    background-color: #f3f4f6;
-    color: #4b5563;
-}
-
-.next-button {
-    background-color: #3b82f6;
-    color: #ffffff;
-}
-
-.page-indicator {
-    font-weight: 500;
-    color: #4b5563;
-}
-</style>
