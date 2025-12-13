@@ -4,8 +4,8 @@
     {{ currentTime | date: 'HH:mm:ss' }}
   </div>
 
-  <button (click)="toggleTheme()" style="padding: 10px 20px; cursor: pointer;">
-    {{ isDarkTheme ? '☀️ Світла тема' : '🌙 Темна тема' }}
+  <button class="theme-toggle" (click)="toggleTheme()" title="Змінити тему">
+    {{ isDarkTheme ? '☀️' : '🌙' }}
   </button>
 </div>
 
