@@ -1,71 +1,153 @@
-import { Injectable } from '@angular/core';
+// src/app/services/book.service.ts
+
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { HttpClient } from '@angular/common/http'; 
+import { Observable, of, BehaviorSubject } from 'rxjs'; 
+import { map } from 'rxjs/operators'; 
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Book {
-  id: number;
-  title: string;
-  author: string;
-  excerpt: string;
-  fullText: string;
-  imageUrl?: string;
-  category: string;
+    id: number;
+    title: string;
+    author: string;
+    excerpt: string;
+    fullTextSource?: string;
+    fullText?: string;
+    imageUrl?: string;
+    category: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BookService {
-  public readonly categories: string[] = [ 
-    'Усі Книги', 
-    'TypeScript', 
-    'Angular', 
-    'CSS/HTML'
-  ];
-  
-  private books: Book[] = [
-    {
-      id: 1,
-      title: "Основи TypeScript",
-      author: "Анонім",
-      excerpt: "Ця книга пояснює базові концепції TypeScript та його переваги у великих проєктах.",
-      fullText: "Привіт, це перша частина тексту книги про TypeScript. Він є суперсетом JavaScript і додає статичну типізацію. Це значно зменшує кількість помилок при розробці великих додатків. Ми розглянемо інтерфейси, класи, дженерики та інші ключові елементи. Читайте далі, щоб дізнатися більше...",
-      imageUrl: "https://via.placeholder.com/150/007bff/ffffff?text=TS",
-      category: 'TypeScript'
-    },
-    {
-      id: 2,
-      title: "Вступ до Angular",
-      author: "Angular Dev",
-      excerpt: "Посібник для початківців із компонентів, модулів та двобічного біндингу.",
-      fullText: "Angular — це потужний фреймворк для створення односторінкових додатків (SPA). Він базується на компонентній архітектурі. Кожен додаток складається з компонентів, які керують своєю частиною інтерфейсу та логіки...",
-      imageUrl: undefined,
-      category: 'Angular'
-    },
-    {
-      id: 3,
-      title: "Майстерність CSS Grid",
-      author: "Веб Дизайнер",
-      excerpt: "Повний посібник з Flexbox та Grid для створення сучасних макетів.",
-      fullText: "...",
-      imageUrl: "https://via.placeholder.com/150/28a745/ffffff?text=CSS",
-      category: 'CSS/HTML'
-    },
-    {
-      id: 4,
-      title: "Основи HTTP та API",
-      author: "Бекенд Розробник",
-      excerpt: "Як працювати з HTTP-запитами, API та асинхронним кодом у JavaScript.",
-      fullText: "...",
-      category: 'CSS/HTML'
+    
+    private readonly STORAGE_KEY = 'local_angular_books';
+    private nextId = 5;
+    private booksSubject = new BehaviorSubject<Book[]>([]); 
+    private isBrowser: boolean;
+    
+    public readonly categories: string[] = [
+        'Усі Книги',
+        'TypeScript',
+        'Angular',
+        'CSS/HTML'
+    ];
+
+    private initialBooks: Book[] = [
+        { id: 1, title: "Programming TypeScript", author: "Boris Cherny", excerpt: "Масштабування JavaScript-додатків...", fullTextSource: '/assets/programming_typescript.txt', imageUrl: "/TypeScript.jpg", category: 'TypeScript' },
+        { id: 2, title: "Angular: Up and Running", author: "Shyam Seshadri", excerpt: "Покроковий гід по створенню Angular-додатків...", fullTextSource: '/assets/angular_up_and_running.txt', imageUrl: "/angular.png", category: 'Angular' },
+        { id: 3, title: "CSS Secrets", author: "Lea Verou", excerpt: "47 готових рішень для складних проблем веб-дизайну...", fullTextSource: '/assets/css_secrets.txt', imageUrl: "css.jfif", category: 'CSS/HTML' },
+        { id: 4, title: "HTML and CSS: Design and Build Websites", author: "Jon Duckett", excerpt: "Візуальний гід по створенню веб-сайтів...", fullTextSource: '/assets/html_and_css_design.txt', imageUrl: "jond.jfif", category: 'CSS/HTML' }
+    ];
+
+    constructor(
+        private http: HttpClient,
+        @Inject(PLATFORM_ID) private platformId: Object 
+    ) {
+        this.isBrowser = isPlatformBrowser(this.platformId);
+        this.loadBooksFromStorage();
     }
-  ];
+    
+    private loadBooksFromStorage(): void {
+        if (!this.isBrowser) {
+            this.booksSubject.next(this.initialBooks);
+            return;
+        }
+        
+        let books: Book[] = [...this.initialBooks];
+        const storedBooks = localStorage.getItem(this.STORAGE_KEY);
+        
+        if (storedBooks) {
+            const localData: Book[] = JSON.parse(storedBooks);
+            const userAddedBooks = localData.filter(b => b.fullTextSource === 'local-memory');
+    
+            if (userAddedBooks.length > 0) {
+                books.push(...userAddedBooks);
+                const lastId = Math.max(...books.map(b => b.id));
+                this.nextId = lastId + 1;
+            }
+        }
+        
+        this.booksSubject.next(books);
+    }
 
-  constructor() { }
+    private saveBooksToStorage(books: Book[]): void {
+        if (!this.isBrowser) {
+            return;
+        }
+    
+        const dataToStore = books
+            .filter(book => book.fullTextSource === 'local-memory')
+            .map(book => {
+                const { fullText, ...rest } = book;
+                return rest;
+            });
+        
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(dataToStore));
+    }
 
-  getAllBooks(): Book[] {
-    return this.books;
-  }
+    getAllBooksAsync(): Observable<Book[]> {
+        return this.booksSubject.asObservable();
+    }
 
-  getBookById(id: number): Book | undefined {
-    return this.books.find(book => book.id === id);
-  }
+    getBookById(id: number): Book | undefined {
+        return this.booksSubject.getValue().find(book => book.id === id);
+    }
+
+    addBookToMemory(newBookData: { title: string, author: string, excerpt: string, fullText: string, category: string, imageUrl?: string }): Promise<void> {
+        return new Promise((resolve) => {
+            const currentBooks = this.booksSubject.getValue();
+            
+            const newBook: Book = {
+                id: this.nextId++,
+                title: newBookData.title,
+                author: newBookData.author,
+                excerpt: newBookData.excerpt,
+                fullText: newBookData.fullText, 
+                fullTextSource: 'local-memory',
+                category: newBookData.category,
+                imageUrl: newBookData.imageUrl
+            };
+            
+            const updatedBooks = [...currentBooks, newBook];
+            this.booksSubject.next(updatedBooks);
+            this.saveBooksToStorage(updatedBooks); 
+            
+            resolve();
+        });
+    }
+
+    getBookFullText(bookId: number): Observable<string> {
+        const book = this.booksSubject.getValue().find(b => b.id === bookId);
+    
+        if (!book) {
+            return of('Книгу не знайдено.');
+        }
+        
+        if (book.fullText) {
+            return of(book.fullText);
+        }
+        
+        if (book.fullTextSource && book.fullTextSource.endsWith('.txt')) {
+            return this.http.get(book.fullTextSource, { responseType: 'text' }).pipe(
+                map((text: string) => { 
+                    book.fullText = text; 
+                    return text;
+                })
+            );
+        }
+        
+        return of('Помилка: Повний текст книги не завантажено.');
+    }
+    
+    deleteBook(bookId: number): void {
+        const currentBooks = this.booksSubject.getValue();
+        const updatedBooks = currentBooks.filter(book => book.id !== bookId);
+        
+        if (updatedBooks.length < currentBooks.length) {
+            this.booksSubject.next(updatedBooks);
+            this.saveBooksToStorage(updatedBooks);
+        }
+    }
 }

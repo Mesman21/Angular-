@@ -1,48 +1,43 @@
-<div class="reader-page-container">
-    
-    <a routerLink="/library" class="back-button">
-        ← Повернутися до бібліотеки
+<div class="reader-container">
+    <a [routerLink]="['/library']" class="back-link">
+        &larr; Повернутися до бібліотеки
     </a>
 
-    <div *ngIf="currentBook" class="reader-content">
-        
-        <h1 class="book-title">{{ currentBook.title }}</h1>
-        <p class="book-author">Автор: {{ currentBook.author }}</p>
-        
-        <hr>
-
-        <div class="book-text">
-            <p>{{ pageContent }}</p>
-        </div>
-        
-        <div class="pagination-controls">
-            <button 
-                (click)="goToPrevPage()" 
-                [disabled]="isFirstPage()"
-                [class.disabled]="isFirstPage()"
-                class="nav-button prev"
-            >
-                ← Попередня
-            </button>
-            
-            <span class="page-indicator">
-                Сторінка {{ currentPageIndex + 1 }} з {{ pages.length }}
-            </span>
-            
-            <button 
-                (click)="goToNextPage()" 
-                [disabled]="isLastPage()"
-                [class.disabled]="isLastPage()"
-                class="nav-button next"
-            >
-                Наступна →
-            </button>
-        </div>
-
+    <div class="book-info-header" *ngIf="currentBook">
+        <h1 class="title">{{ currentBook.title }}</h1>
+        <p class="author">
+            Автор: 
+            <span class="font-semibold">{{ currentBook.author }}</span>
+        </p>
     </div>
 
-    <div *ngIf="!currentBook">
-        <h2>Помилка</h2>
-        <p>На жаль, книга з ID {{ bookId }} не знайдена. Перевірте посилання.</p>
+    <hr class="divider">
+
+    <div class="book-content">
+        <pre class="page-text-visible">{{ pageContent }}</pre>
+    </div>
+
+    <div class="pagination-controls">
+        
+        <button 
+            [disabled]="isFirstPage()" 
+            (click)="goToPrevPage()"
+            class="pagination-button prev-button"
+        >
+            &larr; Попередня
+        </button>
+
+        <span class="page-indicator">
+            Сторінка {{ currentPageIndex + 1 }} з {{ totalPages }}
+        </span>
+
+        <button 
+            [disabled]="isLastPage()" 
+            (click)="goToNextPage()"
+            class="pagination-button next-button"
+        >
+            Наступна &rarr;
+        </button>
+
     </div>
 </div>
