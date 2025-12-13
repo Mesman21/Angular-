@@ -9,10 +9,10 @@
 
 .library-title {
     color: #333;
-    font-size: 2.5em; 
-    font-weight: 300; 
+    font-size: 2.5em;
+    font-weight: 300;
     padding: 0;
-    margin-bottom: 25px; 
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -27,16 +27,16 @@
 }
 
 .sidebar {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     width: 280px;
     min-width: 250px;
-    padding: 25px; 
+    padding: 25px;
     margin-right: 35px;
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
-    border: 1px solid #e9ecef; 
-    height: fit-content; 
-    margin-top: 0; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    height: fit-content;
+    margin-top: 0;
 }
 
 .sidebar h3 {
@@ -44,8 +44,8 @@
     color: #343a40;
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 15px; 
-    border-bottom: 2px solid #007bff; 
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff;
     padding-bottom: 8px;
 }
 
@@ -61,18 +61,18 @@
 
 .category-filters a {
     text-decoration: none;
-    color: #495057; 
+    color: #495057;
     font-size: 1.05em;
     transition: all 0.2s;
     display: block;
-    padding: 8px 12px; 
+    padding: 8px 12px;
     border-radius: 6px;
 }
 
 .category-filters a:hover,
 .category-filters a.active {
-    color: #007bff; 
-    background-color: #e9f5ff; 
+    color: #007bff;
+    background-color: #e9f5ff;
     font-weight: 600;
 }
 
@@ -86,7 +86,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%; 
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -110,20 +110,28 @@
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px; 
-    padding: 0; 
+    gap: 25px;
+    padding: 0;
 }
 
 .book-card {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s;
-    height: 100%;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+
+
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+
+.book-card h3,
+.book-card p,
+.book-card a {
+  color: var(--text-color);
 }
 
 .book-card:hover {
@@ -132,21 +140,21 @@
 }
 
 .book-cover-container {
-    height: 200px; 
+    height: 200px;
     margin-bottom: 0;
-    border-bottom: 1px solid #e0e0e0; 
+    border-bottom: 1px solid #e0e0e0;
     border-radius: 10px 10px 0 0;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f8f8; 
+    background-color: #f8f8f8;
 }
 
 .book-cover {
     width: 100%;
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 .no-photo {
@@ -184,12 +192,12 @@
 
 .book-content-wrapper .excerpt {
     font-style: italic;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .read-button {
     display: block;
-    width: 100%; 
+    width: 100%;
     background-color: #007bff;
     color: white;
     text-align: center;
@@ -203,7 +211,7 @@
 .read-button:hover {
     background-color: #0056b3;
 }
- 
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -339,36 +347,36 @@ a {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .book-content-wrapper .excerpt {
     font-style: italic;
-    flex-grow: 1; 
+    flex-grow: 1;
     margin-bottom: 10px;
 }
 
 .card-actions {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     padding-top: 15px;
-    border-top: 1px solid #e5e7eb; 
+    border-top: 1px solid #e5e7eb;
 }
 
 .read-action-button {
-    flex-grow: 1; 
+    flex-grow: 1;
     text-align: center;
 }
 
 .delete-action-button {
-    background-color: #dc3545; 
+    background-color: #dc3545;
     color: white;
-    flex-grow: 0; 
+    flex-grow: 0;
     width: 90px;
     border: none;
-    padding: 10px 0; 
+    padding: 10px 0;
     border-radius: 8px;
     cursor: pointer;
 }

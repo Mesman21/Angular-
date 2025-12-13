@@ -1,3 +1,12 @@
-<main>
-  <router-outlet></router-outlet>
-</main>
+<div style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+
+  <div style="font-size: 24px; font-weight: bold; font-family: monospace; color: var(--text-color);">
+    {{ currentTime | date: 'HH:mm:ss' }}
+  </div>
+
+  <button (click)="toggleTheme()" style="padding: 10px 20px; cursor: pointer;">
+    {{ isDarkTheme ? '☀️ Світла тема' : '🌙 Темна тема' }}
+  </button>
+</div>
+
+<router-outlet></router-outlet>

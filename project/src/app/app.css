@@ -1,0 +1,100 @@
+:host {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --card-bg: #f8f9fa;
+  --border-color: #ddd;
+  --accent-blue: #007bff;
+}
+
+:host.dark-theme {
+  --bg-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --card-bg: #2d2d2d;
+  --border-color: #404040;
+  --accent-blue: #007bff;
+}
+
+::ng-deep html,
+::ng-deep body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  min-height: 100vh;
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+:host {
+  display: block;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+::ng-deep .book-card,
+::ng-deep .sidebar,
+::ng-deep .categories-container,
+::ng-deep .page-layout {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+::ng-deep h1, ::ng-deep h2, ::ng-deep h3, ::ng-deep p, ::ng-deep a, ::ng-deep span, ::ng-deep div, ::ng-deep li {
+  color: var(--text-color);
+}
+
+::ng-deep a.active {
+  color: var(--accent-blue) !important;
+}
+
+:host.dark-theme ::ng-deep .sidebar a.active,
+:host.dark-theme ::ng-deep .list-group-item.active {
+  background-color: #383838 !important;
+  border-color: #555 !important;
+  color: #ffffff !important;
+}
+
+:host.dark-theme ::ng-deep .sidebar a:hover,
+:host.dark-theme ::ng-deep .list-group-item:hover {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+:host.dark-theme ::ng-deep h1,
+:host.dark-theme ::ng-deep h2,
+:host.dark-theme ::ng-deep h3 {
+  color: #ffffff !important;
+  border-bottom-color: #555555 !important;
+}
+
+:host.dark-theme ::ng-deep p,
+:host.dark-theme ::ng-deep li,
+:host.dark-theme ::ng-deep span,
+:host.dark-theme ::ng-deep div {
+  color: #d4d4d4 !important;
+}
+
+:host.dark-theme ::ng-deep a {
+  text-decoration: none;
+}
+
+:host.dark-theme ::ng-deep pre,
+:host.dark-theme ::ng-deep code {
+  background-color: #383838 !important;
+  border: 1px solid #555 !important;
+}
+
+:host.dark-theme ::ng-deep .btn-primary {
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+  color: #ffffff !important;
+}
+
+:host.dark-theme ::ng-deep .btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #ffffff !important;
+}
+
+:host.dark-theme ::ng-deep a:not(.btn) {
+  color: #ffffff !important;
+}
