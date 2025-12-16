@@ -119,27 +119,26 @@ export class BookService {
     }
 
     getBookFullText(bookId: number): Observable<string> {
-        const book = this.booksSubject.getValue().find(b => b.id === bookId);
-    
-        if (!book) {
-            return of('Книгу не знайдено.');
-        }
-        
-        if (book.fullText) {
-            return of(book.fullText);
-        }
-        
-        if (book.fullTextSource && book.fullTextSource.endsWith('.txt')) {
-            return this.http.get(book.fullTextSource, { responseType: 'text' }).pipe(
-                map((text: string) => { 
-                    book.fullText = text; 
-                    return text;
-                })
-            );
-        }
-        
-        return of('Помилка: Повний текст книги не завантажено.');
-    }
+                const book = this.booksSubject.getValue().find(b => b.id === bookId);
+            
+                if (!book) {
+                    return of('Книгу не знайдено.');
+                }
+                
+                if (book.fullText) {
+                    return of(book.fullText);
+                }
+                
+                if (book.fullTextSource && book.fullTextSource.endsWith('.txt')) {
+                    return this.http.get(book.fullTextSource, { responseType: 'text' }).pipe(
+                        map((text: string) => { 
+                            return text;
+                        })
+                    );
+                }
+                
+                return of('Помилка: Повний текст книги не завантажено.');
+            }
     
     deleteBook(bookId: number): void {
         const currentBooks = this.booksSubject.getValue();

@@ -1,66 +1,109 @@
 /* src/app/library/reader/reader.css */
 
-.reader-page-container {
-    max-width: 900px; 
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+:root {
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --reader-bg: #f8f8f8;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --card-bg: #1f2937;
+        --text-color: #e5e7eb;
+        --border-color: #4b5563;
+        --reader-bg: #111827;
+    }
+}
+
+body {
+    background-color: var(--reader-bg, #f8f8f8);
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--reader-bg, #111827); 
+    }
+}
+
+
+.reader-page-container {
+    max-width: 700px; 
+    margin: 40px auto;
+    margin-top: -20px;
+    padding: 30px;
+    border-radius: 12px;
+    background: var(--card-bg, #ffffff);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* === ОСНОВНИЙ ТЕКСТ КНИГИ === */
+.page-text-visible p {
+    line-height: 1.8; 
+    font-size: 1.1em;
+    color: var(--text-color); 
+    text-align: justify; 
+    margin-bottom: 30px; 
+    
+    /* Тут можна додати font-family для основного тексту: */
+    /* font-family: 'Georgia', serif; */
+}
+
+/* === ЗАГАЛЬНИЙ КОЛІР ДЛЯ ТЕКСТУ === */
+.page-text-visible,
+.book-author, 
+.page-indicator,
+.book-title {
+    color: var(--text-color);
+}
+
+/* === КНОПКА ПОВЕРНЕННЯ === */
 .back-button {
     display: inline-block;
     margin-bottom: 25px;
     text-decoration: none;
-    color: #007bff;
     font-weight: 500;
-    transition: color 0.2s;
     font-size: 1.1em;
+    transition: color 0.2s;
+    
+    color: var(--accent-blue, #007bff); 
 }
 
 .back-button:hover {
-    color: #0056b3;
+    color: var(--border-color, #0056b3); 
 }
 
+/* === ІНФОРМАЦІЯ ПРО КНИГУ === */
 .book-title {
     font-size: 2.2em;
-    color: #333;
     margin-bottom: 5px;
 }
 
 .book-author {
     font-style: italic;
-    color: #6c757d;
     font-size: 1.1em;
     margin-bottom: 20px;
+    color: var(--text-color); /* Використовуємо загальний text-color */
 }
 
+/* === РОЗДІЛЬНИК === */
 hr {
     border: 0;
     height: 1px;
-    background-color: #e0e0e0;
+    background-color: var(--border-color);
     margin: 25px 0;
 }
 
-.book-text p {
-    line-height: 1.8; 
-    font-size: 1.1em;
-    color: #343a40;
-    text-align: justify; 
-    margin-bottom: 30px;
-}
-
+/* === КЕРУВАННЯ СТОРІНКАМИ === */
 .pagination-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
-    border-top: 1px solid #f0f0f0;
 }
 
 .nav-button {
-    background-color: #007bff;
+    background-color: var(--accent-blue, #007bff);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -71,17 +114,17 @@ hr {
 }
 
 .nav-button:hover:not(:disabled) {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Залишаємо фіксований темніший синій */
 }
 
 .nav-button:disabled,
 .nav-button.disabled {
-    background-color: #adb5bd;
+    background-color: var(--border-color, #adb5bd);
     cursor: not-allowed;
     opacity: 0.7;
 }
 
 .page-indicator {
-    color: #6c757d;
+    color: var(--text-color, #6c757d);
     font-size: 0.9em;
 }

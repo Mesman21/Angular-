@@ -1,3 +1,6 @@
+/* src/app/app.css */
+
+/* === CSS VARIABLES (LIGHT THEME) === */
 :host {
   --bg-color: #ffffff;
   --text-color: #333333;
@@ -6,6 +9,7 @@
   --accent-blue: #007bff;
 }
 
+/* === CSS VARIABLES (DARK THEME) === */
 :host.dark-theme {
   --bg-color: #1e1e1e;
   --text-color: #e0e0e0;
@@ -13,6 +17,8 @@
   --border-color: #404040;
   --accent-blue: #007bff;
 }
+
+/* === ГЛОБАЛЬНА СТИЛІЗАЦІЯ === */
 
 ::ng-deep html,
 ::ng-deep body {
@@ -45,6 +51,8 @@
 ::ng-deep a.active {
   color: var(--accent-blue) !important;
 }
+
+/* === СТИЛІЗАЦІЯ ТЕМНОЇ ТЕМИ === */
 
 :host.dark-theme ::ng-deep .sidebar a.active,
 :host.dark-theme ::ng-deep .list-group-item.active {
@@ -99,12 +107,55 @@
   color: #ffffff !important;
 }
 
+/* === СТИЛІ ДЛЯ ГОДИННИКА ТА ТЕМИ === */
+
+/* Стилізація самого годинника */
+.app-time {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Consolas', 'Courier New', monospace; 
+  color: var(--text-color);
+}
+
+/* Стилі картки-обгортки */
+.time-theme-wrapper {
+  width: 280px; 
+  min-width: 250px; 
+  
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  
+  padding: 15px 25px; 
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px; 
+}
+
+/* Стиль обгортки (вирівнювання) */
+.app-header {
+  width: 100%;
+  max-width: 1400px; 
+  margin: 0 auto 20px auto; 
+  padding: 0 20px; 
+  
+  display: flex;
+  justify-content: flex-start; 
+  
+  background-color: transparent;
+  box-shadow: none; 
+}
+
+/* Стилі кнопки теми */
 .theme-toggle {
   background: transparent;
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
-  padding: 8px;
+  padding: 0px;
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -112,9 +163,14 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s, background-color 0.2s;
+  color: var(--text-color);
 }
 
 .theme-toggle:hover {
   background-color: rgba(128, 128, 128, 0.1);
   transform: scale(1.1);
+}
+
+:host.dark-theme .theme-toggle {
+  color: var(--text-color);
 }
