@@ -1,125 +1,128 @@
-/* src/app/library/book-list/book-list.css */
-
+/* === ОСНОВНИЙ КОНТЕЙНЕР === */
 .library-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    margin-top: -130px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: -130px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .library-title {
-    color: #333;
-    font-size: 2.5em;
-    font-weight: 300;
-    padding: 0;
-    margin-bottom: 25px;
-    text-align: center;
+  color: var(--text-color);
+  font-size: 2.5em;
+  font-weight: 300;
+  padding: 0;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 .page-layout {
-    display: flex;
+  display: flex;
 }
 
 .main-content {
-    flex-grow: 1;
-    min-width: 0;
-    padding-left: 35px;
+  flex-grow: 1;
+  min-width: 0;
+  padding-left: 35px;
 }
 
+/* === САЙДБАР (АДАПТИВНИЙ) === */
 .sidebar {
-    background-color: #ffffff;
-    width: 280px;
-    min-width: 250px;
-    padding: 25px;
-    margin-right: 35px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
-    height: fit-content;
-    margin-top: 0;
+  background-color: var(--card-bg); /* Тепер темний у темній темі */
+  color: var(--text-color);         /* Текст адаптується */
+  width: 280px;
+  min-width: 250px;
+  padding: 25px;
+  margin-right: 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  height: fit-content;
+  margin-top: 0;
 }
 
 .sidebar h3 {
-    font-size: 1.4em;
-    color: #343a40;
-    font-weight: 700;
-    margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 8px;
+  font-size: 1.4em;
+  color: var(--text-color);
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 8px;
 }
-
-.category-filters ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-}
-
-.category-filters li {
-    margin-bottom: 2px;
-}
-
-.category-filters a {
-    text-decoration: none;
-    color: #495057;
-    font-size: 1.05em;
-    transition: all 0.2s;
-    display: block;
-    padding: 8px 12px;
-    border-radius: 6px;
-}
-
-.category-filters a:hover,
-.category-filters a.active {
-    color: #007bff;
-    background-color: #e9f5ff;
-    font-weight: 600;
-}
-
-.add-book-button-sidebar {
-    background-color: #10b981;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.add-book-button-sidebar:hover {
-    background-color: #059669;
-}
-
 
 .sidebar hr {
-    border: none;
-    border-top: 1px solid #ced4da;
-    margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0;
 }
 
 .sidebar p {
-    color: #6c757d;
-    font-size: 0.9em;
-    padding: 0 12px;
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 0.9em;
+  padding: 0 12px;
 }
 
+/* === ФІЛЬТРИ КАТЕГОРІЙ === */
+.category-filters ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.category-filters li {
+  margin-bottom: 2px;
+}
+
+.category-filters a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.05em;
+  transition: all 0.2s;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* Активна кнопка завжди біла на синьому */
+.category-filters a:hover,
+.category-filters a.active {
+  color: #ffffff !important;
+  background-color: #007bff;
+  font-weight: 600;
+}
+
+/* === КНОПКА ДОДАТИ КНИГУ === */
+.add-book-button-sidebar {
+  background-color: #10b981;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.add-book-button-sidebar:hover {
+  background-color: #059669;
+}
+
+/* === КАРТКИ КНИГ === */
 .book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0;
 }
 
 .book-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
   color: var(--text-color);
-
-
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -127,6 +130,10 @@
   transition: transform 0.2s;
 }
 
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
 
 .book-card h3,
 .book-card p,
@@ -134,253 +141,255 @@
   color: var(--text-color);
 }
 
-.book-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-}
-
 .book-cover-container {
-    height: 200px;
-    margin-bottom: 0;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
+  height: 200px;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
 }
 
 .book-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .no-photo {
-    width: 100%;
-    height: 100%;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #888;
-    font-size: 1.1em;
-    font-weight: bold;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .book-content-wrapper {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .book-content-wrapper h3 {
-    color: #1a0dab;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.2em;
+  color: #007bff; /* Заголовки сині */
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
 }
 
 .book-content-wrapper p {
-    color: #555;
-    font-size: 0.9em;
-    margin-bottom: 10px;
+  color: var(--text-color);
+  font-size: 0.9em;
+  margin-bottom: 10px;
 }
 
 .book-content-wrapper .excerpt {
-    font-style: italic;
-    flex-grow: 1;
+  font-style: italic;
+  flex-grow: 1;
+  margin-bottom: 10px;
 }
 
 .read-button {
-    display: block;
-    width: 100%;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 15px;
-    box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 15px;
+  box-sizing: border-box;
 }
 
 .read-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* === ВАЖЛИВО: ДИСКЛЕЙМЕР (ЧОРНИЙ ТЕКСТ ЗАВЖДИ) === */
+.disclaimer {
+  background-color: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #000000 !important;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.disclaimer p,
+.disclaimer strong,
+.disclaimer span {
+  color: #000000 !important;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* === МОДАЛКА === */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    position: relative;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .modal-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
 }
 
 .close-button {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: #6b7280;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
 }
 
-.disclaimer {
-    background-color: #fef3c7;
-    border: 1px solid #fcd34d;
-    color: #92400e;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.disclaimer p {
-    margin: 0;
-    font-size: 0.9rem;
-}
-
+/* === ЕЛЕМЕНТІ ФОРМИ === */
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #374151;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text-color);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 1rem;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: var(--card-bg);
 }
 
 .form-group small {
-    display: block;
-    margin-top: 5px;
-    color: #9ca3af;
-    font-size: 0.85rem;
+  display: block;
+  margin-top: 5px;
+  color: var(--text-color);
+  opacity: 0.7;
+  font-size: 0.85rem;
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-top: 20px;
-    border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
 }
 
 .cancel-button {
-    background-color: #6b7280;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  background-color: #6b7280;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .cancel-button:hover {
-    background-color: #4b5563;
+  background-color: #4b5563;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .submit-button {
-    background-color: #3b82f6;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  background-color: #3b82f6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .submit-button:hover {
-    background-color: #2563eb;
-}
-
-.book-content-wrapper {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.book-content-wrapper .excerpt {
-    font-style: italic;
-    flex-grow: 1;
-    margin-bottom: 10px;
+  background-color: #2563eb;
 }
 
 .card-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    padding-top: 15px;
-    border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
 }
 
 .read-action-button {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .delete-action-button {
-    background-color: #dc3545;
-    color: white;
-    flex-grow: 0;
-    width: 90px;
-    border: none;
-    padding: 10px 0;
-    border-radius: 8px;
-    cursor: pointer;
+  background-color: #dc3545;
+  color: white;
+  flex-grow: 0;
+  width: 90px;
+  border: none;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .delete-action-button:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }

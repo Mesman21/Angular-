@@ -1,6 +1,3 @@
-/* src/app/app.css */
-
-/* === CSS VARIABLES (LIGHT THEME) === */
 :host {
   --bg-color: #ffffff;
   --text-color: #333333;
@@ -9,7 +6,6 @@
   --accent-blue: #007bff;
 }
 
-/* === CSS VARIABLES (DARK THEME) === */
 :host.dark-theme {
   --bg-color: #1e1e1e;
   --text-color: #e0e0e0;
@@ -17,8 +13,6 @@
   --border-color: #404040;
   --accent-blue: #007bff;
 }
-
-/* === ГЛОБАЛЬНА СТИЛІЗАЦІЯ === */
 
 ::ng-deep html,
 ::ng-deep body {
@@ -51,8 +45,6 @@
 ::ng-deep a.active {
   color: var(--accent-blue) !important;
 }
-
-/* === СТИЛІЗАЦІЯ ТЕМНОЇ ТЕМИ === */
 
 :host.dark-theme ::ng-deep .sidebar a.active,
 :host.dark-theme ::ng-deep .list-group-item.active {
@@ -107,62 +99,51 @@
   color: #ffffff !important;
 }
 
-/* === СТИЛІ ДЛЯ ГОДИННИКА ТА ТЕМИ === */
-
-/* Стилізація самого годинника */
 .app-time {
   font-size: 1.5rem;
   font-weight: 600;
-  font-family: 'Consolas', 'Courier New', monospace; 
+  font-family: 'Consolas', 'Courier New', monospace;
   color: var(--text-color);
 }
 
-/* Стилі картки-обгортки */
 .time-theme-wrapper {
-  width: 280px; 
-  min-width: 250px; 
-  
+  width: 280px;
+  min-width: 250px;
   background-color: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
-  
-  padding: 15px 25px; 
-  
+  padding: 15px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px; 
+  gap: 15px;
 }
 
-/* Стиль обгортки (вирівнювання) */
 .app-header {
   width: 100%;
-  max-width: 1400px; 
-  margin: 0 auto 20px auto; 
-  padding: 0 20px; 
-  
+  max-width: 1400px;
+  margin: 0 auto 20px auto;
+  padding: 20px 20px 0 20px;
   display: flex;
-  justify-content: flex-start; 
-  
+  justify-content: flex-start;
   background-color: transparent;
-  box-shadow: none; 
+  box-shadow: none;
 }
 
-/* Стилі кнопки теми */
 .theme-toggle {
   background: transparent;
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
-  padding: 0px;
+  padding: 0;
   border-radius: 50%;
   width: 45px;
   height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, background-color 0.2s;
+  transition: transform 0.2s;
   color: var(--text-color);
 }
 
@@ -173,4 +154,51 @@
 
 :host.dark-theme .theme-toggle {
   color: var(--text-color);
+}
+
+::ng-deep body.dark-theme .modal-content {
+  background-color: #2d2d2d !important;
+  color: #d4d4d4 !important;
+  border: 1px solid #404040 !important;
+}
+
+::ng-deep body.dark-theme .modal-header,
+::ng-deep body.dark-theme .modal-footer {
+  border-color: #404040 !important;
+}
+
+::ng-deep body.dark-theme .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+::ng-deep body.dark-theme .modal-body label,
+::ng-deep body.dark-theme label,
+::ng-deep body.dark-theme .form-label,
+::ng-deep body.dark-theme .modal-title {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep body.dark-theme .form-control,
+::ng-deep body.dark-theme .form-select {
+  background-color: #383838 !important;
+  border: 1px solid #555 !important;
+  color: #ffffff !important;
+}
+
+::ng-deep body.dark-theme .form-control:focus,
+::ng-deep body.dark-theme .form-select:focus {
+  background-color: #454545 !important;
+  border-color: #007bff !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+::ng-deep body.dark-theme .alert-warning {
+  background-color: #fff3cd !important;
+  border-color: #ffecb5 !important;
+  color: #000000 !important;
+}
+
+::ng-deep body.dark-theme .alert-warning * {
+  color: #000000 !important;
 }

@@ -1,6 +1,6 @@
-import { Component, Inject, PLATFORM_ID, HostBinding, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, NgZone, ChangeDetectorRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -9,41 +9,43 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   isDarkTheme = false;
   currentTime = new Date();
+  private timerId: any;
 
   @HostBinding('class.dark-theme') get themeMode() {
     return this.isDarkTheme;
   }
 
-  // Додаємо ChangeDetectorRef у конструктор
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      setInterval(() => {
-        this.currentTime = new Date();
-
-        this.cdr.detectChanges();
-
+    this.ngZone.runOutsideAngular(() => {
+      this.timerId = setInterval(() => {
+        this.ngZone.run(() => {
+          this.currentTime = new Date();
+          this.cdr.detectChanges();
+        });
       }, 1000);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
     }
   }
 
   toggleTheme() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isDarkTheme = !this.isDarkTheme;
-
-      const body = document.body;
-      if (this.isDarkTheme) {
-        body.style.backgroundColor = '#000000';
-      } else {
-        body.style.backgroundColor = '#ffffff';
-      }
+    this.isDarkTheme = !this.isDarkTheme;
+    const body = document.body;
+    if (this.isDarkTheme) {
+      body.classList.add('dark-theme');
+      body.style.backgroundColor = '#1e1e1e';
+    } else {
+      body.classList.remove('dark-theme');
+      body.style.backgroundColor = '#ffffff';
     }
   }
 }
