@@ -9,7 +9,7 @@
 
       <div class="category-filters">
         <ul>
-          <li *ngFor="let category of bookService.categories">
+          <li *ngFor="let category of availableCategories">
             <a
               (click)="filterBooks(category)"
               [class.active]="isCategorySelected(category)"
@@ -54,7 +54,7 @@
                 [routerLink]="['/read', book.id]"
                 class="submit-button read-action-button"
               >
-                {{ getBookProgress(book.id) > 0 ? 'Продовжити' : 'Читати' }} →
+                {{ getBookProgress(book.id) > 0 ? 'Далі' : 'Читати' }} →
               </a>
 
               <button
@@ -105,14 +105,31 @@
         <small>Зображення беруться з публічної папки проекту.</small>
       </div>
 
-
       <div class="form-group">
         <label for="category">Категорія:</label>
-        <select id="category" [(ngModel)]="newBook.category" name="category" required>
-          <option *ngFor="let cat of availableCategories" [value]="cat">{{ cat }}</option>
-        </select>
-      </div>
+        
+        <ng-container *ngIf="!isCustomCategory">
+          <select id="category" [(ngModel)]="newBook.category" name="category" required>
+            <option *ngFor="let cat of availableCategories" [value]="cat">{{ cat }}</option>
+          </select>
+          <button type="button" class="toggle-link" (click)="toggleCategoryMode()">
+            + Створити свій жанр
+          </button>
+        </ng-container>
 
+        <ng-container *ngIf="isCustomCategory">
+          <input 
+            type="text" 
+            id="newCategory" 
+            [(ngModel)]="newBook.category" 
+            name="customCategory" 
+            placeholder="Введіть назву нового жанру..." 
+            required>
+          <button type="button" class="toggle-link" (click)="toggleCategoryMode()">
+            ← Повернутися до списку
+          </button>
+        </ng-container>
+      </div>
       <div class="form-group">
         <label for="excerpt">Короткий опис (Excerpt):</label>
         <textarea id="excerpt" [(ngModel)]="newBook.excerpt" name="excerpt" rows="2" required #excerpt="ngModel"></textarea>

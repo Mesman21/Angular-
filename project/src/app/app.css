@@ -101,23 +101,28 @@
 
 .app-time {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 600; 
   font-family: 'Consolas', 'Courier New', monospace;
   color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  line-height: 1;            
+  display: flex;
+  align-items: center;      
 }
 
 .time-theme-wrapper {
-  width: 280px;
-  min-width: 250px;
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--border-color);
-  padding: 15px 25px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center;      
+  justify-content: center;   
   gap: 15px;
+  width: 280px;
+  height: 60px;              
+  padding: 0 15px;          
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .app-header {
@@ -140,6 +145,7 @@
   border-radius: 50%;
   width: 45px;
   height: 45px;
+  margin: 0px;
   display: flex;
   align-items: center;
   justify-content: center;

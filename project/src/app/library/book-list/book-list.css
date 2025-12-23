@@ -253,10 +253,11 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 30px;
-  max-width: 600px;
-  width: 90%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   position: relative;
+  width: 1500px;
+  max-height: 800px;  
+  overflow-y: auto; 
 }
 
 .modal-header {
@@ -392,4 +393,21 @@ a {
 
 .delete-action-button:hover {
   background-color: #c82333;
+}
+
+.toggle-link {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  margin-top: 5px;
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.toggle-link:hover {
+  text-decoration: none;
+  color: #0056b3;
 }
