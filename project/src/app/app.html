@@ -1,12 +1,14 @@
-<div style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-
-  <div style="font-size: 24px; font-weight: bold; font-family: monospace; color: var(--text-color);">
-    {{ currentTime | date: 'HH:mm:ss' }}
+<div class="app-header"> 
+    
+  <div class="time-theme-wrapper">
+      <div class="app-time">
+        {{ currentTime | date: 'HH:mm:ss' }}
+      </div>
+    
+      <button class="theme-toggle" (click)="toggleTheme()" title="Змінити тему">
+        {{ isDarkTheme ? '☀️' : '🌙' }}
+      </button>
   </div>
-
-  <button (click)="toggleTheme()" style="padding: 10px 20px; cursor: pointer;">
-    {{ isDarkTheme ? '☀️ Світла тема' : '🌙 Темна тема' }}
-  </button>
-</div>
-
+  </div>
+  
 <router-outlet></router-outlet>

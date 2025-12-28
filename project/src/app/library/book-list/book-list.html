@@ -1,130 +1,152 @@
 <div class="library-container">
-    
-    <h1 class="library-title">Ваша Онлайн-Бібліотека</h1>
-    
-    <div class="page-layout"> 
-        
-        <div class="sidebar">
-            <h3>Категорії</h3>
-            
-            <div class="category-filters">
-                <ul>
-                    <li *ngFor="let category of bookService.categories">
-                        <a 
-                            (click)="filterBooks(category)"
-                            [class.active]="isCategorySelected(category)"
-                            class="filter-link"
-                        >
-                            {{ category }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <button (click)="openModal()" class="add-book-button-sidebar">
-                Додати нову книгу 📚
-            </button>
 
-            <hr>
-            <p>Тут буде функціонал фільтрації</p>
-        </div>
+  <h1 class="library-title">Ваша Онлайн-Бібліотека</h1>
 
-        
-        <div class="main-content">
-    
-            <div class="book-grid">
-                <div *ngFor="let book of filteredBooks" class="book-card">
-                    <div class="book-content-wrapper">
-                        <div class="book-cover-container">
-                            <img *ngIf="book.imageUrl" [src]="book.imageUrl" [alt]="book.title" class="book-cover">
-                            <div *ngIf="!book.imageUrl" class="no-photo">Обкладинка відсутня</div>
-                        </div>
-                        <div class="book-content-wrapper"></div>
-                        <h3 class="book-title">{{ book.title }}</h3>
-                        <p class="book-author">Автор: {{ book.author }}</p>
-                        <p class="excerpt">{{ book.excerpt }}</p>
-                        
-                        <div class="card-actions"> 
-                            <a 
-                                [routerLink]="['/read', book.id]" 
-                                class="submit-button read-action-button"
-                            >
-                                Читати →
-                            </a>
-                        
-                            <button 
-                                (click)="confirmDelete(book.id, book.title)" 
-                                class="cancel-button delete-action-button"
-                            >
-                                Видалити
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="page-layout">
+
+    <div class="sidebar">
+      <h3>Категорії</h3>
+
+      <div class="category-filters">
+        <ul>
+          <li *ngFor="let category of availableCategories">
+            <a
+              (click)="filterBooks(category)"
+              [class.active]="isCategorySelected(category)"
+              class="filter-link"
+            >
+              {{ category }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <button (click)="openModal()" class="add-book-button-sidebar">
+        Додати нову книгу 📚
+      </button>
+
+      <hr>
+      <p>Тут буде функціонал фільтрації</p>
     </div>
+
+    <div class="main-content">
+
+      <div class="book-grid">
+        <div *ngFor="let book of filteredBooks" class="book-card">
+          <div class="book-content-wrapper">
+            <div class="book-cover-container">
+              <img *ngIf="book.imageUrl" [src]="book.imageUrl" [alt]="book.title" class="book-cover">
+              <div *ngIf="!book.imageUrl" class="no-photo">Обкладинка відсутня</div>
+            </div>
+
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author">Автор: {{ book.author }}</p>
+            <p class="excerpt">{{ book.excerpt }}</p>
+
+            <div class="progress-container" *ngIf="getBookProgress(book.id) > 0">
+              <div class="progress-bar-bg">
+                <div class="progress-fill" [style.width.%]="getBookProgress(book.id)"></div>
+              </div>
+              <small class="progress-text">{{ getBookProgress(book.id) }}% прочитано</small>
+            </div>
+            <div class="card-actions">
+              <a
+                [routerLink]="['/read', book.id]"
+                class="submit-button read-action-button"
+              >
+                {{ getBookProgress(book.id) > 0 ? 'Далі' : 'Читати' }} →
+              </a>
+
+              <button
+                (click)="confirmDelete(book.id, book.title)"
+                class="cancel-button delete-action-button"
+              >
+                Видалити
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="isModalOpen" class="modal-overlay">
-    <div class="modal-content">
-        
-        <div class="modal-header">
-            <h2 class="modal-title">Додати нову книгу до бібліотеки</h2>
-            <button (click)="closeModal()" class="close-button">&times;</button>
-        </div>
+  <div class="modal-content">
 
-        <div class="disclaimer">
-            <p>⚠️ **Увага:** Для коректної роботи пагінації, ви повинні вставити повний текст книги у відповідне поле.</p>
-            <p>Система розіб'є текст на сторінки автоматично. **Мінімум 50 символів.**</p>
-        </div>
-
-        <form #bookForm="ngForm" (ngSubmit)="submitBook()">
-            <div class="form-group">
-                <label for="title">Назва книги:</label>
-                <input id="title" [(ngModel)]="newBook.title" name="title" required #title="ngModel">
-                <div *ngIf="title.invalid && title.touched" class="validation-error">Поле обов'язкове.</div>
-            </div>
-
-            <div class="form-group">
-                <label for="author">Автор:</label>
-                <input id="author" [(ngModel)]="newBook.author" name="author" required #author="ngModel">
-                <div *ngIf="author.invalid && author.touched" class="validation-error">Поле обов'язкове.</div>
-            </div>
-
-            <div class="form-group">
-                <label for="imageUrl">Обкладинка (вибір із доступних):</label>
-                <select id="imageUrl" [(ngModel)]="newBook.imageUrl" name="imageUrl">
-                    <option *ngFor="let img of availableImages" [value]="img.url">{{ img.name }}</option>
-                </select>
-                <small>Зображення беруться з публічної папки проекту.</small>
-            </div>
-
-
-            <div class="form-group">
-                <label for="category">Категорія:</label>
-                <select id="category" [(ngModel)]="newBook.category" name="category" required>
-                    <option *ngFor="let cat of availableCategories" [value]="cat">{{ cat }}</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="excerpt">Короткий опис (Excerpt):</label>
-                <textarea id="excerpt" [(ngModel)]="newBook.excerpt" name="excerpt" rows="2" required #excerpt="ngModel"></textarea>
-                <div *ngIf="excerpt.invalid && excerpt.touched" class="validation-error">Поле обов'язкове.</div>
-            </div>
-
-            <div class="form-group large-text-area">
-                <label for="fullText">Повний текст книги:</label>
-                <textarea id="fullText" [(ngModel)]="newBook.fullText" name="fullText" rows="10" required minlength="50" #fullText="ngModel"></textarea>
-                <small>Вставте сюди весь текст, пагінація буде автоматичною.</small>
-                <div *ngIf="fullText.invalid && fullText.touched" class="validation-error">Текст обов'язковий, мінімум 50 символів.</div>
-            </div>
-
-            <div class="form-actions">
-                <button type="button" (click)="closeModal()" class="cancel-button">Скасувати</button>
-                <button type="submit" class="submit-button" [disabled]="bookForm.invalid">Додати книгу</button>
-            </div>
-        </form>
+    <div class="modal-header">
+      <h2 class="modal-title">Додати нову книгу до бібліотеки</h2>
+      <button (click)="closeModal()" class="close-button">&times;</button>
     </div>
+
+    <div class="disclaimer">
+      <p>⚠️ **Увага:** Для коректної роботи пагінації, ви повинні вставити повний текст книги у відповідне поле.</p>
+      <p>Система розіб'є текст на сторінки автоматично. **Мінімум 50 символів.**</p>
+    </div>
+
+    <form #bookForm="ngForm" (ngSubmit)="submitBook()">
+      <div class="form-group">
+        <label for="title">Назва книги:</label>
+        <input id="title" [(ngModel)]="newBook.title" name="title" required #title="ngModel">
+        <div *ngIf="title.invalid && title.touched" class="validation-error">Поле обов'язкове.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Автор:</label>
+        <input id="author" [(ngModel)]="newBook.author" name="author" required #author="ngModel">
+        <div *ngIf="author.invalid && author.touched" class="validation-error">Поле обов'язкове.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="imageUrl">Обкладинка (вибір із доступних):</label>
+        <select id="imageUrl" [(ngModel)]="newBook.imageUrl" name="imageUrl">
+          <option *ngFor="let img of availableImages" [value]="img.url">{{ img.name }}</option>
+        </select>
+        <small>Зображення беруться з публічної папки проекту.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Категорія:</label>
+        
+        <ng-container *ngIf="!isCustomCategory">
+          <select id="category" [(ngModel)]="newBook.category" name="category" required>
+            <option *ngFor="let cat of availableCategories" [value]="cat">{{ cat }}</option>
+          </select>
+          <button type="button" class="toggle-link" (click)="toggleCategoryMode()">
+            + Створити свій жанр
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="isCustomCategory">
+          <input 
+            type="text" 
+            id="newCategory" 
+            [(ngModel)]="newBook.category" 
+            name="customCategory" 
+            placeholder="Введіть назву нового жанру..." 
+            required>
+          <button type="button" class="toggle-link" (click)="toggleCategoryMode()">
+            ← Повернутися до списку
+          </button>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <label for="excerpt">Короткий опис (Excerpt):</label>
+        <textarea id="excerpt" [(ngModel)]="newBook.excerpt" name="excerpt" rows="2" required #excerpt="ngModel"></textarea>
+        <div *ngIf="excerpt.invalid && excerpt.touched" class="validation-error">Поле обов'язкове.</div>
+      </div>
+
+      <div class="form-group large-text-area">
+        <label for="fullText">Повний текст книги:</label>
+        <textarea id="fullText" [(ngModel)]="newBook.fullText" name="fullText" rows="10" required minlength="50" #fullText="ngModel"></textarea>
+        <small>Вставте сюди весь текст, пагінація буде автоматичною.</small>
+        <div *ngIf="fullText.invalid && fullText.touched" class="validation-error">Текст обов'язковий, мінімум 50 символів.</div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="closeModal()" class="cancel-button">Скасувати</button>
+        <button type="submit" class="submit-button" [disabled]="bookForm.invalid">Додати книгу</button>
+      </div>
+    </form>
+  </div>
 </div>
